@@ -1,10 +1,9 @@
-import logging
 import random
 
 from torchtext import data
 from torchtext import datasets
 
-from aiops.config import cache_dir_for_torch_text
+from aiops.config import cache_dir_for_torch_text, logger
 from aiops.constants import SEED
 from aiops.utils.text_preprocessing.bert import Tokenizer
 
@@ -60,20 +59,20 @@ class FiveClassesClassificationDataSet(DataSets):
         self.domain_dataset = DomainSpecificClassificationDataSet(tokenizer, path, format)
 
     def get_merged_dataset(self):
-        logging.info("trec data loading.....")
+        logger.info("trec data loading.....")
         train_data_trec, valid_data_trec, test_data_trec = self.inbuilt_dataset.trec_split()
-        logging.info("imdb data loading.....")
+        logger.info("imdb data loading.....")
         train_data_imdb, valid_data_imdb, test_data_imdb = self.inbuilt_dataset.imdb_split()
 
-        logging.info("merging data for training.....")
+        logger.info("merging data for training.....")
         merged_train_data_examples_list = train_data_trec.examples + train_data_imdb.examples + self.domain_dataset.dataset.examples
         merged_train_data = data.Dataset(merged_train_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
 
-        logging.info("merging data for validation.....")
+        logger.info("merging data for validation.....")
         merged_valid_data_examples_list = (valid_data_trec.examples + valid_data_imdb.examples)
         merged_valid_data = data.Dataset(merged_valid_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
 
-        logging.info("merging data for testing.....")
+        logger.info("merging data for testing.....")
         merged_test_data_examples_list = (test_data_trec.examples + test_data_imdb.examples)
         merged_test_data = data.Dataset(merged_test_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
 

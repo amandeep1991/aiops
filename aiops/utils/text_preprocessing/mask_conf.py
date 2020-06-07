@@ -11,7 +11,7 @@ mask_map = {
     "mask_mentions": (r'\b[@][\w_-]+\b', r" person"),
     "mask_ips": (r'\b(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[\w\d]{2}:[\w\d]{2}:[\w\d]{2}:[\w\d]{2}:[\w\d]{2}:[\w\d]{2})\b', r"ip"),
     "mask_paths": (r"(/[^/ ]*)+/?", r" path "),
-    "mask_question_marks": (r"\?", r" question mark "),
-    "mask_exclamation_marks": (r"\!", r" exclamation mark "),
+    "mask_question_marks": (r"\?", r" questionmark "),
+    "mask_exclamation_marks": (r"\!", r" exclamationmark "),
 
 }
