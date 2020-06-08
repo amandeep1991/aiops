@@ -122,7 +122,7 @@ class Email:
             if reply_text:
                 temp_content = self._whole_email_body[:self._whole_email_body.find(reply_text)]
             salutation = None
-            pattern = "\s*(?P<salutation>(" + "|".join(EmailParserProperties.salutation_regex) + r")+(\s*\w*)(\s*\w*)(\s*\w*)(\s*\w*)(\s*\w*)[\.,\xe2:\n]+\s*)"
+            pattern = "\s*(?P<salutation>(" + "|".join(EmailParserProperties.salutation_regex) + r")+([^\.,\xe2:\n]*\w*){0,4}[\.,\xe2:\n]+\s*)"
             groups = re.match(pattern, temp_content, re.IGNORECASE)
             if groups is not None:
                 if "salutation" in groups.groupdict():
