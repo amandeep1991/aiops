@@ -1,4 +1,4 @@
 from aiops import config
 
 
-__version__ = '0.0.0.39'
+__version__ = '0.0.0.42'

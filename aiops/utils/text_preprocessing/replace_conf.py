@@ -1,7 +1,6 @@
 social_media_replace_dict = {
     r"[\<\(\[]+(twitter|facebook|fb)[\]\)\>]+\(+.+\)+": "",
     r"[\<\(\[]+(twitter|facebook|fb)[\]\)\>]+": "",
-    r"": r"",
 }
 
 # for confusing contractions, we simply took any value
@@ -130,6 +129,5 @@ contractions_replace_dict = {
     r'plz': 'please',
     r'u': 'you',
     r'asap': 'as soon as possible',
-    r'.+': '',
     r'r': 'are',
 }

@@ -45,7 +45,7 @@ class HtmlTextCleaning(TextCleaning):
                 map(lambda table: table.replaceWith(""), soup.find_all(value))
 
         text = soup.text
-        for pattern, replace in kwargs.get("regex_tuples_list", True):
+        for pattern, replace in kwargs.get("regex_tuples_list", []):
             logger.debug("filtering out: regex='{value}' tag for specified configuration: '{key}'".format(key=key, value=value))
             text = re.sub(pattern, replace, text)
 
@@ -60,13 +60,11 @@ class HtmlTextCleaning(TextCleaning):
             logger.debug("social_media have been replaced successfully")
 
         if kwargs.get("mask_months", True):
-            for pattern, replace in mask_map.get("mask_months"):
-                text = re.sub(pattern, replace, text)
+            text = re.sub(*mask_map.get("mask_months"), text)
             logger.debug("months successfully masked!")
 
         if kwargs.get("mask_timezones", True):
-            for pattern, replace in mask_map.get("mask_timezones"):
-                text = re.sub(pattern, replace, text)
+            text = re.sub(*mask_map.get("mask_timezones"), text)
             logger.debug("time-zones successfully masked!")
 
         if kwargs.get("mask_years", True):
