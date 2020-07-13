@@ -75,9 +75,8 @@ class Email:
                     tmp_signature_previous_content = tmp_signature_current_content
                     for s in EmailParserProperties.signature_regex:
                         if tmp_signature_current_content.find(s) > 0:
-                            tmp_signature_previous_content = tmp_signature_current_content
-                            tmp_signature_current_content = tmp_signature_current_content[len(s):]
-                    groups = re.search(pattern, tmp_signature_previous_content, re.IGNORECASE + re.DOTALL)
+                            tmp_signature_current_content = tmp_signature_current_content[tmp_signature_current_content.find(s):]
+                    groups = re.search(pattern, tmp_signature_current_content, re.IGNORECASE + re.DOTALL)
                     if groups:
                         signature_temp = groups.groupdict()["signature"]
                         if abs(len(signature) - len(signature_temp)) > 22:
@@ -167,8 +166,9 @@ class EmailParserProperties:
     ]
 
     signature_regex = [
-        "warm regards",
-        "kind regards",
+        "warms? *regards",
+        "kinds? *regards",
+        "bests? *regards",
         "many thanks",
         "thank[ -]?you",
         "talk[ -]?soon",

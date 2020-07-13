@@ -79,7 +79,6 @@ class HtmlTextCleaning(TextCleaning):
         text = re.sub(r"\d+", r" ", text)
         text = re.sub(r"\t+", r" ", text)
         text = re.sub(r"\r+", r"\n", text)
-        text = re.sub(r"[^a-z\n]", r" ", text)
         text = re.sub(r"\n+", r"\n", text)
         text = re.sub(r" +", r" ", text)
         return text
