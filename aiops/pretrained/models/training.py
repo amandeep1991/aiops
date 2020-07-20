@@ -50,6 +50,7 @@ class ModelTraining:
         return epoch_loss / len(self.valid_iterator), epoch_acc / len(self.valid_iterator)
 
     def run_epochs_training(self, model_name='aiops_model_001_after_epoch_{}.pt'):
+        training_loss_array, training_accuracy_array, validation_loss_array, validation_accuracy_array = [],[],[],[]
         for epoch in range(self.no_of_epochs):
             logger.info(f'Epoch: {epoch + 1:02} started!')
             start_time = time.time()
@@ -65,7 +66,12 @@ class ModelTraining:
             logger.info(f'Epoch: {epoch + 1:02} | Epoch Time: {epoch_mins}m {epoch_secs}s')
             logger.info(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc * 100:.2f}%')
             logger.info(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc * 100:.2f}%')
-            logger.info("Current Time", datetime.datetime.now())
+            logger.info("Current Time: {}".format(datetime.datetime.now()))
+            training_loss_array.append(train_loss)
+            training_accuracy_array.append(train_acc)
+            validation_loss_array.append(valid_loss)
+            validation_accuracy_array.append(valid_acc)
+        return training_loss_array, training_accuracy_array, validation_loss_array, validation_accuracy_array
 
     @staticmethod
     def epoch_time(start_time, end_time):

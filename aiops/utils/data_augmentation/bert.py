@@ -5,7 +5,6 @@ from torchtext import datasets
 
 from aiops.config import cache_dir_for_torch_text, logger
 from aiops.constants import SEED
-from aiops.utils.text_preprocessing.bert import Tokenizer
 
 
 class DataSets:
@@ -29,9 +28,11 @@ class TorchTextInbuiltClassificationDataSets(DataSets):
             ex.label = overwrite_labels_by.get(ex.label)
         return train_data_trec, valid_data_trec, test_data_trec
 
-    def imdb_split(self, **kwargs):
+    def imdb_split(self, overwrite_labels_by=dict(pos="green", neg="amber"), **kwargs):
         train_data_imdb, test_data_imdb = datasets.IMDB.splits(self.text_processor, self.label_processor, root=cache_dir_for_torch_text, **kwargs)
         train_data_imdb, valid_data_imdb = train_data_imdb.split(random_state=random.seed(SEED))
+        for ex in (train_data_imdb + test_data_imdb + valid_data_imdb):
+            ex.label = overwrite_labels_by.get(ex.label)
         return train_data_imdb, test_data_imdb, valid_data_imdb
 
 
@@ -78,9 +79,25 @@ class FiveClassesClassificationDataSet(DataSets):
 
         return merged_train_data, merged_valid_data, merged_test_data
 
-    # @staticmethod
-    # def get_bucket_iterator(train_data, valid_data, test_data, batch_size, kwargs):
-    #     train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits(
-    #         (train_data, valid_data, test_data), batch_size=batch_size, **kwargs)
-    #
-    #     return train_iterator, valid_iterator, test_iterator
+
+class FOUR(DataSets):
+
+    def __init__(self, tokenizer, path, format='json') -> None:
+        super().__init__(tokenizer)
+        self.inbuilt_dataset = TorchTextInbuiltClassificationDataSets(tokenizer)
+        self.domain_dataset = DomainSpecificClassificationDataSet(tokenizer, path, format)
+
+    def get_train_and_valid_datasets(self, train_ratio=0.8):
+        logger.info("get_train_and_valid_datasets.......")
+        logger.info("imdb data loading.....")
+        train_data_imdb, valid_data_imdb, _ = self.inbuilt_dataset.imdb_split()
+
+        total_examples = len(self.domain_dataset.dataset.examples)
+        training_examples_count = int(train_ratio * total_examples)
+        merged_train_data_examples_list = self.domain_dataset.dataset.examples[:training_examples_count] + train_data_imdb.examples
+        merged_train_data = data.Dataset(merged_train_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
+
+        merged_valid_data_examples_list = self.domain_dataset.dataset.examples[training_examples_count:] + valid_data_imdb.examples
+        merged_valid_data = data.Dataset(merged_valid_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
+
+        return merged_train_data, merged_valid_data

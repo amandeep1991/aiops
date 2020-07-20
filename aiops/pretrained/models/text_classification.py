@@ -6,8 +6,11 @@ from transformers import BertModel
 from aiops.config import logger
 
 
-class TextClassifierWithBertEmbeddings(nn.Module):
-    def __init__(self, hidden_dim, output_dim, n_layers, bidirectional, dropout, tokenizer, bert=BertModel.from_pretrained('bert-base-uncased')):
+class BertEmbeddingsClassifier(nn.Module):
+    '''
+    Tokenizer should build vocabulary in advance
+    '''
+    def __init__(self, hidden_dim, output_dim, n_layers, bidirectional, dropout, tokenizer, output_label_to_index=None, bert=BertModel.from_pretrained('bert-base-uncased')):
         super().__init__()
         self.bert = bert
         embedding_dim = self.bert.config.to_dict()['hidden_size']
@@ -16,7 +19,7 @@ class TextClassifierWithBertEmbeddings(nn.Module):
                           dropout=0 if n_layers < 2 else dropout)
         self.out = nn.Linear(hidden_dim * 2 if bidirectional else hidden_dim, output_dim)
         self.dropout = nn.Dropout(dropout)
-        self.output_label_to_index = {'neg': 0, 'pos': 1, 'urg': 2, 'neu': 3, 'mix': 4}
+        self.output_label_to_index = self.tokenizer.get_label_processor().vocab.stoi if not output_label_to_index else output_label_to_index
         self.output_index_to_label = {v: k for k, v in self.output_label_to_index.items()}
 
     def forward(self, text):
@@ -42,7 +45,7 @@ class TextClassifierWithBertEmbeddings(nn.Module):
         if 10 == 10:
             for name, param in self.named_parameters():
                 if param.requires_grad:
-                    logger.debug(name, len(param))
+                    logger.debug("{} : {}".format(name, len(param)))
 
         logger.debug(f'The model has {count_parameters(self):,} trainable parameters')
 

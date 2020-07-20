@@ -1,4 +1,4 @@
-from aiops.pretrained.models.five_classes import TextClassifierWithBertEmbeddings
+from aiops.pretrained.models.text_classification import BertEmbeddingsClassifier
 from aiops.utils.text_preprocessing.bert import Tokenizer
 from aiops.utils.data_augmentation.bert import FiveClassesClassificationDataSet
 from torchtext import data
@@ -24,7 +24,7 @@ print(LABEL.vocab.stoi)
 train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits(
     (merged_train_data, merged_valid_data, merged_test_data), batch_size = BATCH_SIZE, sort=False, device = device)
 
-model = TextClassifierWithBertEmbeddings(HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT, tokenizer)
+model = BertEmbeddingsClassifier(HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT, tokenizer)
 
 model_path = "aiops_model_001_after_epoch_007.pt"
 model_path = "aiops_model_002_after_epoch_007.pt"
