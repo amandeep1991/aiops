@@ -41,31 +41,31 @@ class HtmlTextCleaning(TextCleaning):
 
         for key, value in self.mapping_for_filtering_specific_tags_by_bs.items():
             if kwargs.get(key, True):
-                logger.debug("filtering out: '{value}' tag for specified configuration: '{key}'".format(key=key, value=value))
+                # logger.debug("filtering out: '{value}' tag for specified configuration: '{key}'".format(key=key, value=value))
                 map(lambda table: table.replaceWith(""), soup.find_all(value))
 
         text = soup.text
         for pattern, replace in kwargs.get("regex_tuples_list", []):
-            logger.debug("filtering out: regex='{value}' tag for specified configuration: '{key}'".format(key=key, value=value))
+            # logger.debug("filtering out: regex='{value}' tag for specified configuration: '{key}'".format(key=key, value=value))
             text = re.sub(pattern, replace, text)
 
         if kwargs.get("replace_contractions", True):
             for pattern, replace in contractions_replace_dict.items():
                 text = re.sub(r"\b" + pattern + r"\b", replace, text)
-            logger.debug("contractions have been replaced successfully")
+            # logger.debug("contractions have been replaced successfully")
 
         if kwargs.get("replace_social_media", True):
             for pattern, replace in social_media_replace_dict.items():
                 text = re.sub(pattern, replace, text)
-            logger.debug("social_media have been replaced successfully")
+            # logger.debug("social_media have been replaced successfully")
 
         if kwargs.get("mask_months", True):
             text = re.sub(*mask_map.get("mask_months"), text)
-            logger.debug("months successfully masked!")
+            # logger.debug("months successfully masked!")
 
         if kwargs.get("mask_timezones", True):
             text = re.sub(*mask_map.get("mask_timezones"), text)
-            logger.debug("time-zones successfully masked!")
+            # logger.debug("time-zones successfully masked!")
 
         if kwargs.get("mask_years", True):
             text = re.sub(*mask_map.get("mask_years"), text)

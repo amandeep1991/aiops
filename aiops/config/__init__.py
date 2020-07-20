@@ -9,8 +9,8 @@ logger.setLevel(logging.DEBUG)
 class LoggerMock:
 
     def print_code(self, s):
-        # print(str(self.__class__.__name__) + " : " + s)
-        pass
+        print(str(self.__class__.__name__) + " : " + s)
+        # pass
 
     def info(self, s):
         self.print_code(s)
