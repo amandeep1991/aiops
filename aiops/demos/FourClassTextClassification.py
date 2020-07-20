@@ -31,12 +31,15 @@ os.chdir("C:/ML/code/prod/python/aiops")
 
 four_colored_classes_classification_dataset = FOUR(tokenizer, "my_domain_specific_data--type2-retagged.txt")
 
-merged_train_data, merged_valid_data = four_colored_classes_classification_dataset.get_train_and_valid_datasets(0.9)
+merged_train_data, merged_valid_data = four_colored_classes_classification_dataset.get_train_and_valid_domain_dataset(0.9)
 
 
 LABEL.build_vocab(merged_train_data)
 print(LABEL.vocab.stoi)
 
+from torchtext import data
+merged_train_data, merged_valid_data = data.BucketIterator.splits(
+    (merged_train_data, merged_valid_data), batch_size = BATCH_SIZE, sort=False, device = device)
 
 model = BertEmbeddingsClassifier(HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT, tokenizer)
 model = model.to(device)

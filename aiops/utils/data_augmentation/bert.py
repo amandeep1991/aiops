@@ -1,5 +1,5 @@
 import random
-
+import torch
 from torchtext import data
 from torchtext import datasets
 
@@ -98,6 +98,18 @@ class FOUR(DataSets):
         merged_train_data = data.Dataset(merged_train_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
 
         merged_valid_data_examples_list = self.domain_dataset.dataset.examples[training_examples_count:] + valid_data_imdb.examples
+        merged_valid_data = data.Dataset(merged_valid_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
+
+        return merged_train_data, merged_valid_data
+
+    def get_train_and_valid_domain_dataset(self, train_ratio=0.8):
+        logger.info("get_train_and_valid_domain_dataset.......")
+        total_examples = len(self.domain_dataset.dataset.examples)
+        training_examples_count = int(train_ratio * total_examples)
+        merged_train_data_examples_list = self.domain_dataset.dataset.examples[:training_examples_count]
+        merged_train_data = data.Dataset(merged_train_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
+
+        merged_valid_data_examples_list = self.domain_dataset.dataset.examples[training_examples_count:]
         merged_valid_data = data.Dataset(merged_valid_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
 
         return merged_train_data, merged_valid_data
