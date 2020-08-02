@@ -6,10 +6,10 @@ from transformers import BertModel
 from aiops.config import logger
 
 
-class BertEmbeddingsClassifier(nn.Module):
-    '''
+class BertWithGruClassifier(nn.Module):
+    """
     Tokenizer should build vocabulary in advance
-    '''
+    """
     def __init__(self, hidden_dim, output_dim, n_layers, bidirectional, dropout, tokenizer, output_label_to_index=None, bert=BertModel.from_pretrained('bert-base-uncased')):
         super().__init__()
         self.bert = bert

@@ -113,3 +113,26 @@ class FOUR(DataSets):
         merged_valid_data = data.Dataset(merged_valid_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
 
         return merged_train_data, merged_valid_data
+
+    def get_train_and_valid_and_test_dataset_from_three(self, train_ratio=0.8):
+        logger.info("trec data loading.....")
+        train_data_trec, valid_data_trec, test_data_trec = self.inbuilt_dataset.trec_split(overwrite_labels_by=dict(ABBR="amber", DESC="amber", ENTY="amber", HUM="amber", LOC="amber", NUM="amber"))
+        logger.info("imdb data loading.....")
+        train_data_imdb, valid_data_imdb, test_data_imdb = self.inbuilt_dataset.imdb_split(overwrite_labels_by=dict(pos="green", neg="amber"))
+
+        total_examples = len(self.domain_dataset.dataset.examples)
+        training_examples_count = int(train_ratio * total_examples)
+
+        logger.info("merging data for training.....")
+        merged_train_data_examples_list = self.domain_dataset.dataset.examples[:training_examples_count] + train_data_trec.examples + valid_data_trec.examples
+        merged_train_data = data.Dataset(merged_train_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
+
+        logger.info("merging data for validation.....")
+        merged_valid_data_examples_list = self.domain_dataset.dataset.examples[training_examples_count:] + train_data_trec.examples + valid_data_imdb.examples
+        merged_valid_data = data.Dataset(merged_valid_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
+
+        logger.info("merging data for testing.....")
+        merged_test_data_examples_list = (test_data_trec.examples + test_data_imdb.examples)
+        merged_test_data = data.Dataset(merged_test_data_examples_list, fields=[("text", self.text_processor), ("label", self.label_processor)])
+
+        return merged_train_data, merged_valid_data, merged_test_data

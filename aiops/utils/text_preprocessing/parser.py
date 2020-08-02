@@ -11,7 +11,7 @@ class Email:
         super().__init__()
         if whole_email_body is None:
             raise ValueError("'whole_email_body' can't be 'None'....")
-        self._whole_email_body = whole_email_body.strip().lower()
+        self._whole_email_body = whole_email_body.strip()
         self._content_type = content_type
         self._salutation = None
         self._body = None
@@ -56,7 +56,10 @@ class Email:
         signature = None
         temp_content = self._whole_email_body
         self._trailing_emails_entire_text = self._get_trailing_emails_content(temp_content)
-        temp_content = temp_content[: temp_content.find(self._trailing_emails_entire_text)] if self._trailing_emails_entire_text is not None else temp_content
+        if self._trailing_emails_entire_text is not None:
+            search_results = re.search(self._trailing_emails_entire_text, temp_content, re.IGNORECASE)
+            starting_index = search_results.span()[0] if search_results is not None else -1
+            temp_content = temp_content[: starting_index]
         if self._signature is None:
             # Aman may do in future: Need to cater simple FYI emails and simple forward emails
             if self._salutation is None:
@@ -71,11 +74,13 @@ class Email:
 
                     # If signature has another signature within, it means we might have included contents of body in the signature
                     # However, trailing_emails_entire_text is ok even then
-                    tmp_signature_current_content = signature.lower()
+                    tmp_signature_current_content = signature
                     tmp_signature_previous_content = tmp_signature_current_content
                     for s in EmailParserProperties.signature_regex:
-                        if tmp_signature_current_content.find(s) > 0:
-                            tmp_signature_current_content = tmp_signature_current_content[tmp_signature_current_content.find(s):]
+                        search_results = re.search(s, tmp_signature_current_content, re.IGNORECASE)
+                        if search_results:
+                            starting_index = search_results.span()[0] if search_results else -1
+                            tmp_signature_current_content = tmp_signature_current_content[starting_index:]
                     groups = re.search(pattern, tmp_signature_current_content, re.IGNORECASE + re.DOTALL)
                     if groups:
                         signature_temp = groups.groupdict()["signature"]
@@ -104,11 +109,15 @@ class Email:
             if check_reply_text:
                 reply_text = self._get_trailing_emails_content(temp_content)
                 if reply_text:
-                    temp_content = temp_content[:temp_content.find(reply_text)]
+                    search_results = re.search(reply_text, temp_content, re.IGNORECASE)
+                    starting_index = search_results.span()[0] if search_results else -1
+                    temp_content = temp_content[:starting_index]
             if check_signature:
                 sig = self._parse_signature_and_trailing_emails()
                 if sig:
-                    temp_content = temp_content[:temp_content.find(sig)]
+                    search_results = re.search(sig, temp_content, re.IGNORECASE)
+                    starting_index = search_results.span()[0] if search_results else -1
+                    temp_content = temp_content[:starting_index]
             if check_signature:
                 self._body = temp_content if temp_content is None else temp_content.strip()
             else:
@@ -119,7 +128,9 @@ class Email:
             temp_content = self._whole_email_body
             reply_text = self._get_trailing_emails_content(temp_content)
             if reply_text:
-                temp_content = self._whole_email_body[:self._whole_email_body.find(reply_text)]
+                search_results = re.search(reply_text, self._whole_email_body, re.IGNORECASE)
+                starting_index = search_results.span()[0] if search_results else -1
+                temp_content = self._whole_email_body[:starting_index]
             salutation = None
             pattern = "\s*(?P<salutation>(" + "|".join(EmailParserProperties.salutation_regex) + r")+([^\.,\xe2:\n]*\w*){0,4}[\.,\xe2:\n]+\s*)"
             groups = re.match(pattern, temp_content, re.IGNORECASE)
@@ -166,18 +177,18 @@ class EmailParserProperties:
     ]
 
     signature_regex = [
-        "warms? *regards",
-        "kinds? *regards",
-        "bests? *regards",
+        "warms? *regards?",
+        "kinds? *regards?",
+        "bests? *regards?",
         "many thanks",
         "thank[ -]?you",
-        "talk[ -]?soon",
+        "talk[ -]?soo?n?",
         "yours *truly",
-        "thanking you",
+        "thanki?n?g? you",
         "sent from my iphone",
         "rgds"
         "ciao",
-        "thanks",
+        "[ -]?thanks?",
         "regards",
         "cheers",
         "cordially",
