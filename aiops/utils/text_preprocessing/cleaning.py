@@ -19,7 +19,7 @@ class HtmlTextCleaning(TextCleaning):
     def __init__(self) -> None:
         self.mapping_for_filtering_specific_tags_by_bs = {
             "ignore_tables": "table",
-            "ignore_links": "a",
+            # "ignore_links": "a",
             "ignore_images": "img",
             "ignore_videos": "video",
 
@@ -28,7 +28,7 @@ class HtmlTextCleaning(TextCleaning):
         }
 
     def process(self, html_text, *args, **kwargs):
-        html_text = html_text.encode('ascii', errors='ignore')
+        html_text = html_text.replace("’", "'").encode('ascii', errors='ignore')
         html_text = html_text.decode('ascii')
 
         special_characters = ["\-", u"\u002d", u"\u058a", u"\u058b", u"\u2010", u"\u2011", u"\u2012",
@@ -42,7 +42,7 @@ class HtmlTextCleaning(TextCleaning):
         for key, value in self.mapping_for_filtering_specific_tags_by_bs.items():
             if kwargs.get(key, True):
                 # logger.debug("filtering out: '{value}' tag for specified configuration: '{key}'".format(key=key, value=value))
-                map(lambda table: table.replaceWith(""), soup.find_all(value))
+                list(map(lambda table: table.extract(), soup.find_all(value)))
 
         text = soup.text
         for pattern, replace in kwargs.get("regex_tuples_list", []):
@@ -75,6 +75,12 @@ class HtmlTextCleaning(TextCleaning):
 
         if kwargs.get("mask_exclamation_marks", False):
             text = re.sub(*mask_map.get("mask_exclamation_marks"), text, flags=re.IGNORECASE)
+
+        # if kwargs.get("mask_email_id", True):
+        #     text = re.sub(r'[^a-zA-Z][^\n]*@[^\n]*[^a-zA-Z]', '', text, flags=re.IGNORECASE)
+
+        if kwargs.get("mask_urls", True):
+            text = re.sub(r'^https?:\/\/[^ ]*[\r\n]*', '', text, flags=re.MULTILINE+re.DOTALL)
 
         # text = re.sub(r"\d+", r" ", text, flags=re.IGNORECASE)
         text = re.sub(r"\t[\t  ]+", r" ", text, flags=re.IGNORECASE)
