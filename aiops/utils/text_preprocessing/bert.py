@@ -27,7 +27,7 @@ class Tokenizer:
         self.data_processor = data.LabelField()
 
     def tokenize(self, text):
-        return self.bert_tokenizer.tokenize(self.cleaner.process(text))
+        return self.bert_tokenizer.tokenize(self.cleaner.process(text)[0])
 
     def get_tokenized_splits(self, text):
         start = 0

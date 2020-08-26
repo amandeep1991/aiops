@@ -38,6 +38,7 @@ class HtmlTextCleaning(TextCleaning):
             html_text = re.sub(c, " ", html_text, flags=re.IGNORECASE)
 
         soup = BeautifulSoup(html_text, 'lxml')
+        soup_with_tables = BeautifulSoup(html_text, 'lxml')
 
         for key, value in self.mapping_for_filtering_specific_tags_by_bs.items():
             if kwargs.get(key, True):
@@ -45,43 +46,39 @@ class HtmlTextCleaning(TextCleaning):
                 list(map(lambda table: table.extract(), soup.find_all(value)))
 
         text = soup.text
+        text_with_tables = soup_with_tables.text
+        text = self.manipulation_over_text(kwargs, text)
+        text_with_tables = self.manipulation_over_text(kwargs, text_with_tables)
+        return text, text_with_tables
+
+    def manipulation_over_text(self, kwargs, text):
         for pattern, replace in kwargs.get("regex_tuples_list", []):
             # logger.debug("filtering out: regex='{value}' tag for specified configuration: '{key}'".format(key=key, value=value))
             text = re.sub(pattern, replace, text, flags=re.IGNORECASE)
-
         if kwargs.get("replace_contractions", True):
             for pattern, replace in contractions_replace_dict.items():
                 text = re.sub(r"\b" + pattern + r"\b", replace, text, flags=re.IGNORECASE)
             # logger.debug("contractions have been replaced successfully")
-
         if kwargs.get("replace_social_media", True):
             for pattern, replace in social_media_replace_dict.items():
                 text = re.sub(pattern, replace, text, flags=re.IGNORECASE)
             # logger.debug("social_media have been replaced successfully")
-
         if kwargs.get("mask_months", False):
             text = re.sub(*mask_map.get("mask_months"), text, flags=re.IGNORECASE)
             # logger.debug("months successfully masked!")
-
         if kwargs.get("mask_timezones", False):
             text = re.sub(*mask_map.get("mask_timezones"), text, flags=re.IGNORECASE)
             # logger.debug("time-zones successfully masked!")
-
         if kwargs.get("mask_years", False):
             text = re.sub(*mask_map.get("mask_years"), text, flags=re.IGNORECASE)
-
         if kwargs.get("mask_question_marks", False):
             text = re.sub(*mask_map.get("mask_question_marks"), text, flags=re.IGNORECASE)
-
         if kwargs.get("mask_exclamation_marks", False):
             text = re.sub(*mask_map.get("mask_exclamation_marks"), text, flags=re.IGNORECASE)
-
         # if kwargs.get("mask_email_id", True):
         #     text = re.sub(r'[^a-zA-Z][^\n]*@[^\n]*[^a-zA-Z]', '', text, flags=re.IGNORECASE)
-
         if kwargs.get("mask_urls", True):
-            text = re.sub(r'^https?:\/\/[^ ]*[\r\n]*', '', text, flags=re.MULTILINE+re.DOTALL)
-
+            text = re.sub(r'^https?:\/\/[^ ]*[\r\n]*', '', text, flags=re.MULTILINE + re.DOTALL)
         # text = re.sub(r"\d+", r" ", text, flags=re.IGNORECASE)
         text = re.sub(r"\t[\t  ]+", r" ", text, flags=re.IGNORECASE)
         text = re.sub(r"\r[\r  ]+", r"\n", text, flags=re.IGNORECASE)
