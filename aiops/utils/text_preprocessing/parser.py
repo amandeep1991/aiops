@@ -176,9 +176,9 @@ class EmailParserProperties:
     ]
 
     signature_regex = [
-        "(?<!(Thanks &|anks and)) warms? *regards?",
-        "(?<!(Thanks &|anks and)) kinds? *regards?",
-        "(?<!(Thanks &|anks and)) bests? *regards?",
+        "(?<!(Thanks & |anks and ))warms? *regards?",
+        "(?<!(Thanks & |anks and ))kinds? *regards?",
+        "(?<!(Thanks & |anks and ))bests? *regards?",
         "many thanks",
         "thank[ -]?you",
         "thanks? (and|&) regards?",
@@ -214,11 +214,121 @@ class EmailParserProperties:
 
 if __name__ == "__main__":
     obj = Email("""
-    Dear Team,
-    Thanks for your confirmation. 
     
-    Thanks & Best Regards
-    Khaled Saif Support Team ADN TELECOM LIMITEDRed Crescent Concord Tower Cell:  pplluuss 880 1777 770 28117, Mohakhali C/A IP phone:  pplluuss 880 9610 770 281 Dhaka 1212, Web: www.adngroupbd.comBangladeshISO 9001:2015 CertificationThis email may contain confidential and privileged material for the sole use of the intended recipient. Any review, use, distribution or disclosure by others is strictly prohibited.If you are not the intended recipient (or authorized to receive for the recipient), please contact the sender by reply email and delete all copies of this messageOn Tue, Aug 25, 2020 at 6:38 PM <bat.dcsc@orange.com> wrote:Hello Team,Please find the response from customer on below issue ===========================Yes, There is power issue on site .===========================Thanks and Regards Ratinesh ChawlaBAT Service Desk SpecialistService Operations, India Major Service Center ratinesh.chawla@orange.comTower B 8th Floor DLF Infinity Tower Phase II DLF Cybercity Sector 25 122002.From: NMC | ADN Telecom[mailto:customer.care@adnsl.net]Sent: Tuesday, August 25, 2020 16:24To: ZZZ BAT DCSCCc: Mr.Anis; Mr. Apurba; AKM Shafiul Alam; Abu Naser MuhammadToufiqul Bari; Md Emon; Harun Khan(NOC ADN); Md. Hamidur Rashid; Kamol; NMC | ADN TelecomSubject: Re: Carrier || BAT_BDNL01_Nolam_Bangladesh APAC_MerakiLink down||2008H23399 ||| ADN TT: 200825 065 |||Dear Team,This is to inform you that, we are getting the customer end both links are down at the same time at16:09 Hours(Local Time).We are suspecting customer end power down issue.Thanks & Best RegardsKhaled SaifSupport TeamADN TELECOM LIMITEDRed Crescent Concord Tower Cell:  pplluuss 880 1777 770 28117, Mohakhali C/A IP phone:  pplluuss 880 9610 770 281 Dhaka 1212, Web: www.adngroupbd.comBangladeshISO 9001:2015 CertificationThis email may contain confidential and privileged material for the sole use of the intended recipient. Any review, use, distribution or disclosureby others is strictly prohibited.If you are not the intended recipient (or authorized to receive for the recipient), please contact the sender by reply email and delete all copies of this messageOn Tue, Aug 25, 2020 at 4:47 PM NMC | ADN Telecom <customer.care@adnsl.net>wrote:Dear Team,We have acknowledged your mail and we are investigating. Thanks & Best RegardsKhaled SaifSupport TeamADN TELECOM LIMITEDRed Crescent Concord Tower Cell:  pplluuss 880 1777 770 28117, Mohakhali C/A IP phone:  pplluuss 880 9610 770 281 Dhaka 1212, Web: www.adngroupbd.comBangladeshISO 9001:2015 CertificationThis email may contain confidential and privileged material for the sole use of the intended recipient. Any review, use, distribution or disclosureby others is strictly prohibited.If you are not the intended recipient (or authorized to receive for the recipient), please contact the sender by reply email and delete all copies of this messageOn Tue, Aug 25, 2020 at 4:38 PM <bat.dcsc@orange.com> wrote:Hello Team,Issue : BAT_BDNL01_Nolam_Bangladesh APAC_Meraki Link downSite ID: BDNL01Site Name: NolamCarrier name: ADN TELECOMCircuit ID: ADN/BATB/Nolam/VMI/1MB CCT1Local Contact: Khaled Mohammad Asad  pplluuss 88 01711422440 kmasad@bat.comAddress: British American Tobacco Warehouse (Nolam Tamak Godown)Nolam, Mirzanagor ,Ashulia, Savar, DhakaThanks and Regards Ratinesh ChawlaBAT Service Desk SpecialistService Operations, India Major Service Center ratinesh.chawla@orange.comTower B 8th Floor DLF Infinity Tower Phase II DLF Cybercity Sector 25 122002._________________________________________________________________________________________________________________________Ce message et ses pieces jointes peuvent contenir des informations confidentielles ou privilegiees et ne doivent doncpas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu ce message par erreur, veuillez le signalera l'expediteur et le detruire ainsi que les pieces jointes. Les messages electroniques etant susceptibles d'alteration,Orange decline toute responsabilite si ce message a ete altere, deforme ou falsifie. Merci.This message and its attachments may contain confidential or privileged information that may be protected by law;they should not be distributed, used or copied without authorisation.If you have received this email in error, please notify the sender and delete this message and its attachments.As emails may be altered, Orange is not liable for messages that have been modified, changed or falsified.Thank you._________________________________________________________________________________________________________________________Ce message et ses pieces jointes peuvent contenir des informations confidentielles ou privilegiees et ne doivent doncpas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu ce message par erreur, veuillez le signalera l'expediteur et le detruire ainsi que les pieces jointes. Les messages electroniques etant susceptibles d'alteration,Orange decline toute responsabilite si ce message a ete altere, deforme ou falsifie. Merci.This message and its attachments may contain confidential or privileged information that may be protected by law;they should not be distributed, used or copied without authorisation.If you have received this email in error, please notify the sender and delete this message and its attachments.As emails may be altered, Orange is not liable for messages that have been modified, changed or falsified.Thank you.
+Hello Heba Kamel / Allaa / Nariman /all,
+Good Morning ,
+Kindly note that Allaa Khaleel gratefully accepted to support this migration on the new TW : SAT 22 AUG @ 12 pm GMT.
+Thanks in advance
+Original Appointment 
+From: KHASHABA Ahmed OBS/CSO On Behalf Of KAMEL Heba OBS/CSO
+Sent: Thursday, August 20, 2020 10:44
+To: KHALEEL Allaa OBS/CSO (allaa.khaleel@orange.com); SAUDI Nariman OBS/CSO
+Subject: FW: Fw:BAT Migration of ROBC01 (Romania Bucharest Business Park Category 2 /Option 5) CH4429354 >>>>>>>> Planned for 22nd Aug, 6:00 AM GMT
+When: Saturday, August 22, 2020 08:00 17:00 (UTC pplluuss 02:00) Cairo.
+Where: webex
+Hello Allaa / Nariman ,
+Good Morning ,
+Thanks to book that slot in your calendar for the Migration of ROBC01 (Romania Bucharest Business Park Category 2 /Option 5) CH4429354 >>> Planned for 22nd Aug, 6:00 AM GMT
+Thanks in advance 
+Original Appointment 
+From: KAMEL Heba OBS/CSO 
+Sent: Wednesday, August 19, 2020 16:23
+To: KAMEL Heba OBS/CSO; ZZZ ECS VPI EMEA Demands; Dorio_Popenta@bat.com; ADRIAN NEACSA (Adrian_Neacsa@bat.com);
+gary_clements@bat.com; Srdjan_Jeisel@bat.com; Slaven_Cukic@bat.com;
+SAWAL Bhushan OBS/S APAC; TUPE Ashwin OBS/S APAC; 'anup.ranjan@bt.com'; 'manu.visen@bt.com'; 'brandon.ang@bt.com'; GOYAL Lavish OBS/CSO; SHARMA Narender OBS/CSO; HELMY Mostafa OBS/CSO; SHEIHA Ahmed OBS/CSO; DAHSHAN Mahmoud OBS/CSO; MOHSEN Tamer OBS/CSO; ABD
+EL MEGID Rami OBS/CSO; SINGH Atul Ext OBS/CSO; OJHA Sandeep OBS/CSO; JOSHI Sandhya OBS/CSO; ELDEMALLAWY Ahmed OBS/S EUR; GOPAKUMAR Sukesh OBS/S APAC; coemeraki_bat_build@list2.orange.com;
+ZZZ BAT DCSC; KUMAR Tarun K OBS/CSO; GARG Tushar OBS/CSO; THAKUR Divya OBS/CSO; ATTIA Amir OBS/CSO; HASSAN Dina H OBS/CSO; DL OCWS NOC IEC MERAKI; parau@cns com.com; cvasile@cns com.com;
+ZZZ SHARED TM COE DEL; GUPTA Dipak OBS/CSO; tsc.ggn@list2.orange.com; ZZZ BAT Service Support OGSI; 'bat.support.ogsi@list2.orange.com'; FARAG Youssef OBS/CSO; BASHA Andrew OBS/CSO;
+HELMY Eslam OBS/CSO; ZZZ ECS CTS2_Video
+Subject: Fw:BAT Migration of ROBC01 (Romania Bucharest Business Park Category 2 /Option 5) CH4429354 >>>>>>>> Planned for 22nd Aug, 6:00 AM GMT
+When: Saturday, August 22, 2020 08:00 17:00 (UTC pplluuss 02:00) Cairo.
+Where: webex
+Hello EMEA, 
+Thanks to send this invitation to the one who handle the installation day 
+Best regards, 
+Andrew Akram 
+01222782752 
+Original message 
+From: KAMEL Heba OBS/CSO <heba.kamel@orange.com>
+Date: Wed, Aug 19, 2020, 4:23 PM
+To: Dorio_Popenta@bat.com, "ADRIAN NEACSA (Adrian_Neacsa@bat.com)" <Adrian_Neacsa@bat.com>,
+gary_clements@bat.com, Srdjan_Jeisel@bat.com, Slaven_Cukic@bat.com,
+SAWAL Bhushan OBS/S APAC <bhushan.sawal@orange.com>, TUPE Ashwin OBS/S APAC <ashwin.tupe@orange.com>,
+"'anup.ranjan@bt.com'" <anup.ranjan@bt.com>, "'manu.visen@bt.com'" <manu.visen@bt.com>, "'brandon.ang@bt.com'" <brandon.ang@bt.com>,
+GOYAL Lavish OBS/CSO <lavish.goyal@orange.com>, SHARMA Narender OBS/CSO <narender.sharma@orange.com>,
+HELMY Mostafa OBS/CSO <mostafa.helmy@orange.com>, SHEIHA Ahmed OBS/CSO <ahmed.sheiha@orange.com>, DAHSHAN
+Mahmoud OBS/CSO <mahmoud.dahshan@orange.com>, MOHSEN Tamer OBS/CSO <tamer.mohsen@orange.com>, ABD
+EL MEGID Rami OBS/CSO <rami.abdelmegid@orange.com>, SINGH Atul Ext OBS/CSO <atulk.singh.ext@orange.com>,
+OJHA Sandeep OBS/CSO <sandeep.ojha@orange.com>, JOSHI Sandhya OBS/CSO <sandhya.joshi@orange.com>, ELDEMALLAWY
+Ahmed OBS/S EUR <ahmed.eldemallawy@orange.com>, GOPAKUMAR Sukesh OBS/S APAC <sukesh.gopakumar@orange.com>,
+coemeraki_bat_build@list2.orange.com, ZZZ BAT DCSC <bat.dcsc@orange.com>, KUMAR Tarun K OBS/CSO
+<tarunk.kumar@orange.com>, GARG Tushar OBS/CSO <tushar.garg@orange.com>, THAKUR Divya OBS/CSO <divya.thakur@orange.com>,
+ATTIA Amir OBS/CSO <amir.attia@orange.com>, HASSAN Dina H OBS/CSO <dina.h.hassan@orange.com>, DL OCWS NOC
+IEC MERAKI <ocws noc.iec meraki@orange.com>, parau@cns com.com, cvasile@cns com.com,
+ZZZ SHARED TM COE DEL <sharedtm.coedel@orange.com>, GUPTA Dipak OBS/CSO <dipak.gupta@orange.com>, tsc.ggn@list2.orange.com,
+ZZZ BAT Service Support OGSI <bat.servicesupportogsi@orange.com>, "'bat.support.ogsi@list2.orange.com'" <bat.support.ogsi@list2.orange.com>,
+ZZZ ECS VPI EMEA Demands <vpi.emea.demands@orange.com>, FARAG Youssef OBS/CSO <youssef.hamed@orange.com>,
+BASHA Andrew OBS/CSO <andrew.basha@orange.com>, HELMY Eslam OBS/CSO <eslam.helmy@orange.com>, ZZZ ECS
+CTS2_Video <cts2_video@orange.com>
+Subject: BAT Migration of ROBC01 (Romania Bucharest Business Park Category 2 /Option 5) CH4429354 >>>>>>>> Planned for 22nd Aug, 6:00 AM GMT
+Hello All,
+Thanks to book that slot in your calendar for the Migration of ROBC01 (Romania Bucharest Business Park Category 2 /Option 5) CH4429354 >>> Planned for 22nd
+Aug, 6:00 AM GMT
+Attached the MP for your reference :
+Kit List 
+device name Device Role Device
+IP address chassis type Serial Number Building 
+Floor Room Rack 
+Rack Unit power plug format 
+PBUH1487 MPLS Router 10.252.67.115 
+ISR4331 NA Building B 
+3rd server room Rack 5 you 17 
+EU 
+PBUH1486 Internet Router 10.252.67.116 
+ISR4431 NA Building B 
+3rd server room Rack 5 you 18 
+EU 
+ROBC01MX01 WAN Edge/Core Device 10.252.67.113 
+MX250 HW NA Building B 
+3rd server room Rack 5 you 19 
+EU 
+ROBC01MX02 WAN Edge/Core Device 10.252.67.114 
+MX250 HW NA Building B 
+3rd server room Rack 5 you 20 
+EU 
+ROBC01SH01 Riverbed 10.253.73.36 
+CXA 03070 B110 NA Building B 
+3rd server room Rack 5 you 21 
+EU 
+OBS Resources :
+OBS FE : Robert Ciobanu 0040757.053.205 email: ionut.gheorghe@radcom.roOCWS : ParisOBS UDD : Dhananjay Dass OBS VPO : Ali ZeerakOBS ISE : N/AOBS SOC : 2007Z75534TP : tbcRIVERBED : Andrew BashaGSI : Ashwin / Bhushan
+Thanks & Rgds
+Heba KAMEL 
+Project Manager
+Do not delete or change any of the following text. 
+Join Webex Meeting 
+Meeting number (access code): 128 288 1912 Meeting password:
+vGxayEWe398 
+Join from a video system or application
+Dial 1282881912@orangedemo.webex.com 
+You can also dial 62.109.219.4 and enter your meeting number. 
+Tap to join from a mobile device (attendees only) 
+ pplluuss 1 929 270 4098,,1282881912## US
+Toll 
+ pplluuss 33 1 85 14 85 49,,1282881912## France
+Paris Toll 
+Join by phone 
+ pplluuss 1 929 270 4098 US Toll 
+ pplluuss 33 1 85 14 85 49 France Paris Toll 
+Global call in numbers | Toll free
+calling restrictions 
+For Attendees in China, Please Call XXXX XXXX XXXXX cannot join the meeting?
+If you are a host, click
+here to view host information. IMPORTANT NOTICE:
+Please note that this Webex service allows audio and other information sent during the session to be recorded, which may be discoverable in a legal matter. By joining this session, you automatically consent to such recordings. If you do not consent to being
+recorded, discuss your concerns with the host or do not join the session. 
+<< File: BAT LAN WAN LLD ROBC01v1.9.xls >> 
+
                 """, add_signature_regex=[
 
                     ]
